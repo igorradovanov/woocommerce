@@ -1,37 +1,33 @@
 /**
  * External dependencies
  */
-import { isEmpty } from 'lodash';
+import { Slot, Fill } from '@wordpress/components';
+import { createElement } from '@wordpress/element';
 import {
-	createSlotFill,
-	Slot as BaseSlot,
-	Fill as BaseFill,
-} from '@wordpress/components';
-import { createElement, Fragment } from '@wordpress/element';
+	createOrderedChildren,
+	sortFillsByOrder,
+} from '@woocommerce/components';
 
-type WooProductMoreMenuSlot = React.FC< BaseSlot.Props >;
+export const WC_PRODUCT_MORE_MENU_SLOT_NAME = 'WooProductMenuMenuItem';
 
-type WooProductMoreMenuFill = React.FC< BaseFill.Props > & {
-	Slot?: WooProductMoreMenuSlot;
+type FillProps = React.ComponentProps< typeof Fill >;
+export const WooProductMoreMenuItem: React.FC< {
+	children?: FillProps[ 'children' ];
+	order?: number;
+} > & {
+	Slot: React.FC< Omit< React.ComponentProps< typeof Slot >, 'name' > >;
+} = ( { children, order = 1 } ) => {
+	return (
+		<Fill name={ WC_PRODUCT_MORE_MENU_SLOT_NAME }>
+			{ ( fillProps ) => {
+				return createOrderedChildren( children, order, fillProps );
+			} }
+		</Fill>
+	);
 };
 
-type CreateSlotFillReturn = {
-	Fill: WooProductMoreMenuFill;
-	Slot: WooProductMoreMenuSlot;
-};
-
-const { Fill, Slot }: CreateSlotFillReturn = createSlotFill(
-	'WooProductMoreMenuItem'
-);
-
-Fill.Slot = ( { fillProps } ) => (
-	<Slot fillProps={ fillProps }>
-		{ ( fills ) => {
-			return isEmpty( fills ) ? null : <>{ fills }</>;
-		} }
+WooProductMoreMenuItem.Slot = ( { fillProps } ) => (
+	<Slot name={ WC_PRODUCT_MORE_MENU_SLOT_NAME } fillProps={ fillProps }>
+		{ sortFillsByOrder }
 	</Slot>
 );
-
-export const WooProductMoreMenuItem = Fill as WooProductMoreMenuFill & {
-	Slot: WooProductMoreMenuSlot;
-};

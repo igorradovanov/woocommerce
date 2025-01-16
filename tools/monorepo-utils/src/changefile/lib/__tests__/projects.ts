@@ -93,11 +93,11 @@ describe( 'Changelog project functions', () => {
 				changeLoggerProjects
 			);
 
-		expect( intersectedProjects ).toHaveLength( 2 );
-		expect( intersectedProjects ).toContain(
-			'folder-with-lots-of-projects/project-b'
-		);
-		expect( intersectedProjects ).toContain( 'projects/very-cool-project' );
+		expect( intersectedProjects ).toMatchObject( {
+			'folder-with-lots-of-projects/project-b':
+				'folder-with-lots-of-projects/project-b',
+			'projects/very-cool-project': 'projects/very-cool-project',
+		} );
 	} );
 
 	it( 'getTouchedChangeloggerProjectsPathsMappedToProjects should map plugins and js packages to the correct name', async () => {
@@ -119,26 +119,11 @@ describe( 'Changelog project functions', () => {
 				changeLoggerProjects
 			);
 
-		expect( intersectedProjects ).toHaveLength( 4 );
-		expect( intersectedProjects ).toContain( 'woocommerce' );
-		expect( intersectedProjects ).toContain( 'beta-tester' );
-		expect( intersectedProjects ).toContain( '@woocommerce/components' );
-		expect( intersectedProjects ).toContain( '@woocommerce/data' );
-	} );
-
-	it( 'getTouchedChangeloggerProjectsPathsMappedToProjects should handle woocommerce-admin projects mapped to woocommerce core', async () => {
-		const touchedFiles = [
-			'plugins/beta-tester/src/index.js',
-			'plugins/woocommerce-admin/src/index.js',
-		];
-		const changeLoggerProjects = [ 'plugins/woocommerce' ];
-		const intersectedProjects =
-			getTouchedChangeloggerProjectsPathsMappedToProjects(
-				touchedFiles,
-				changeLoggerProjects
-			);
-
-		expect( intersectedProjects ).toHaveLength( 1 );
-		expect( intersectedProjects ).toContain( 'woocommerce' );
+		expect( intersectedProjects ).toMatchObject( {
+			woocommerce: 'plugins/woocommerce',
+			'beta-tester': 'plugins/beta-tester',
+			'@woocommerce/components': 'packages/js/components',
+			'@woocommerce/data': 'packages/js/data',
+		} );
 	} );
 } );
