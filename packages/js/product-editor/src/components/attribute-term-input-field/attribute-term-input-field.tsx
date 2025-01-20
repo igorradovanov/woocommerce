@@ -41,6 +41,7 @@ type AttributeTermInputFieldProps = {
 	disabled?: boolean;
 	label?: string;
 	autoCreateOnSelect?: boolean;
+	readOnlyWhenClosed?: boolean;
 };
 
 interface customError extends Error {
@@ -60,6 +61,7 @@ export const AttributeTermInputField: React.FC<
 	attributeId,
 	label = '',
 	autoCreateOnSelect = true,
+	readOnlyWhenClosed = false,
 } ) => {
 	const attributeTermInputId = useRef(
 		`woocommerce-attribute-term-field-${ ++uniqueId }`
@@ -81,17 +83,17 @@ export const AttributeTermInputField: React.FC<
 			return resolveSelect(
 				EXPERIMENTAL_PRODUCT_ATTRIBUTE_TERMS_STORE_NAME
 			)
-				.getProductAttributeTerms< ProductAttributeTerm[] >( {
+				.getProductAttributeTerms( {
 					search: searchString || '',
 					attribute_id: attributeId,
 				} )
 				.then(
-					( attributeTerms ) => {
+					( attributeTerms: ProductAttributeTerm[] ) => {
 						setFetchedItems( attributeTerms );
 						setIsFetching( false );
 						return attributeTerms;
 					},
-					( error ) => {
+					( error: string ) => {
 						setIsFetching( false );
 						return error;
 					}
@@ -266,6 +268,7 @@ export const AttributeTermInputField: React.FC<
 				selected={ value }
 				onSelect={ onSelect }
 				onRemove={ onRemove }
+				readOnlyWhenClosed={ readOnlyWhenClosed }
 				className={
 					'woocommerce-attribute-term-field ' +
 					attributeTermInputId.current
@@ -308,15 +311,9 @@ export const AttributeTermInputField: React.FC<
 												<CheckboxControl
 													onChange={ () => null }
 													checked={ isSelected }
+													// @ts-expect-error The label prop can be a string, however, the final consumer of this prop accepts ReactNode.
 													label={
-														<span
-															style={ {
-																fontWeight:
-																	isSelected
-																		? 'bold'
-																		: 'normal',
-															} }
-														>
+														<span>
 															{ item.name }
 														</span>
 													}

@@ -1,6 +1,13 @@
+/**
+ * Internal dependencies
+ */
 const { test, expect } = require( '@playwright/test' );
+const { setComingSoon } = require( '../../utils/coming-soon' );
 
 test.describe( 'Customer-role users are blocked from accessing the WP Dashboard.', () => {
+	test.beforeAll( async ( { baseURL } ) => {
+		await setComingSoon( { baseURL, enabled: 'no' } );
+	} );
 	test.use( { storageState: process.env.CUSTOMERSTATE } );
 
 	const dashboardScreens = {
@@ -10,7 +17,9 @@ test.describe( 'Customer-role users are blocked from accessing the WP Dashboard.
 	};
 
 	for ( const [ description, path ] of Object.entries( dashboardScreens ) ) {
-		test( `Customer is redirected from ${description} back to the My Account page.`, async ( { page } ) => {
+		test( `Customer is redirected from ${ description } back to the My Account page.`, async ( {
+			page,
+		} ) => {
 			await page.goto( path );
 			expect( page.url() ).toContain( '/my-account/' );
 		} );
