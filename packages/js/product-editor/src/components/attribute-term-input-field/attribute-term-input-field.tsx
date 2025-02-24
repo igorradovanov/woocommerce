@@ -16,8 +16,8 @@ import { recordEvent } from '@woocommerce/tracks';
 import { useDebounce } from '@wordpress/compose';
 import { plus } from '@wordpress/icons';
 import {
-	EXPERIMENTAL_PRODUCT_ATTRIBUTE_TERMS_STORE_NAME,
 	ProductAttributeTerm,
+	experimentalProductAttributeTermsStore,
 } from '@woocommerce/data';
 import {
 	selectControlStateChangeTypes,
@@ -41,6 +41,7 @@ type AttributeTermInputFieldProps = {
 	disabled?: boolean;
 	label?: string;
 	autoCreateOnSelect?: boolean;
+	readOnlyWhenClosed?: boolean;
 };
 
 interface customError extends Error {
@@ -60,6 +61,7 @@ export const AttributeTermInputField: React.FC<
 	attributeId,
 	label = '',
 	autoCreateOnSelect = true,
+	readOnlyWhenClosed = false,
 } ) => {
 	const attributeTermInputId = useRef(
 		`woocommerce-attribute-term-field-${ ++uniqueId }`
@@ -73,25 +75,23 @@ export const AttributeTermInputField: React.FC<
 		useState< string >();
 	const { createNotice } = useDispatch( 'core/notices' );
 	const { createProductAttributeTerm, invalidateResolutionForStoreSelector } =
-		useDispatch( EXPERIMENTAL_PRODUCT_ATTRIBUTE_TERMS_STORE_NAME );
+		useDispatch( experimentalProductAttributeTermsStore );
 
 	const fetchItems = useCallback(
 		( searchString?: string | undefined ) => {
 			setIsFetching( true );
-			return resolveSelect(
-				EXPERIMENTAL_PRODUCT_ATTRIBUTE_TERMS_STORE_NAME
-			)
-				.getProductAttributeTerms< ProductAttributeTerm[] >( {
+			return resolveSelect( experimentalProductAttributeTermsStore )
+				.getProductAttributeTerms( {
 					search: searchString || '',
 					attribute_id: attributeId,
 				} )
 				.then(
 					( attributeTerms ) => {
-						setFetchedItems( attributeTerms );
+						setFetchedItems( attributeTerms || [] );
 						setIsFetching( false );
 						return attributeTerms;
 					},
-					( error ) => {
+					( error: string ) => {
 						setIsFetching( false );
 						return error;
 					}
@@ -138,16 +138,14 @@ export const AttributeTermInputField: React.FC<
 		} );
 		setIsCreatingTerm( true );
 		try {
-			const newAttribute: ProductAttributeTerm =
-				await createProductAttributeTerm( {
-					...attribute,
-					attribute_id: attributeId,
-				} );
+			const newAttribute = await createProductAttributeTerm( {
+				...attribute,
+				attribute_id: attributeId,
+			} );
 			recordEvent( 'product_attribute_term_add_success', {
 				source: TRACKS_SOURCE,
 			} );
 			onChange( [ ...value, newAttribute ] );
-			invalidateResolutionForStoreSelector( 'getProductAttributes' );
 			invalidateResolutionForStoreSelector( 'getProductAttributeTerms' );
 			setIsCreatingTerm( false );
 		} catch ( err: unknown ) {
@@ -266,6 +264,7 @@ export const AttributeTermInputField: React.FC<
 				selected={ value }
 				onSelect={ onSelect }
 				onRemove={ onRemove }
+				readOnlyWhenClosed={ readOnlyWhenClosed }
 				className={
 					'woocommerce-attribute-term-field ' +
 					attributeTermInputId.current
@@ -308,15 +307,9 @@ export const AttributeTermInputField: React.FC<
 												<CheckboxControl
 													onChange={ () => null }
 													checked={ isSelected }
+													// @ts-expect-error The label prop can be a string, however, the final consumer of this prop accepts ReactNode.
 													label={
-														<span
-															style={ {
-																fontWeight:
-																	isSelected
-																		? 'bold'
-																		: 'normal',
-															} }
-														>
+														<span>
 															{ item.name }
 														</span>
 													}

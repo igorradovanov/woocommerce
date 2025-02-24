@@ -1,7 +1,6 @@
 /**
  * External dependencies
  */
-import React from 'react';
 import { Slot, Fill } from '@wordpress/components';
 import { createElement } from '@wordpress/element';
 import {
@@ -49,11 +48,11 @@ export const WooHeaderItem: React.FC< {
 	children?: React.ReactNode;
 	order?: number;
 } > & {
-	Slot: React.FC< Slot.Props & { name?: string } >;
+	Slot: React.FC< React.ComponentProps< typeof Slot > & { name?: string } >;
 } = ( { children, order = 1, name = '' } ) => {
 	return (
 		<Fill name={ getSlotFillName( name ) }>
-			{ ( fillProps: Fill.Props ) => {
+			{ ( fillProps ) => {
 				return createOrderedChildren( children, order, fillProps );
 			} }
 		</Fill>
