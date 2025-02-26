@@ -149,19 +149,9 @@ export const CustomAttributeTermInputField: React.FC<
 												checked={ value.includes(
 													item
 												) }
+												// @ts-expect-error The label prop can be a string, however, the final consumer of this prop accepts ReactNode.
 												label={
-													<span
-														style={ {
-															fontWeight:
-																value.includes(
-																	item
-																)
-																	? 'bold'
-																	: 'normal',
-														} }
-													>
-														{ item }
-													</span>
+													<span> { item } </span>
 												}
 											/>
 										) }

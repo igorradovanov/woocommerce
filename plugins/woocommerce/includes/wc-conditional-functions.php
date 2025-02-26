@@ -9,6 +9,7 @@
  */
 
 use Automattic\Jetpack\Constants;
+use Automattic\WooCommerce\Blocks\Utils\CartCheckoutUtils;
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -93,23 +94,31 @@ if ( ! function_exists( 'is_cart' ) ) {
 	 * @return bool
 	 */
 	function is_cart() {
-		$page_id = wc_get_page_id( 'cart' );
-
-		return ( $page_id && is_page( $page_id ) ) || Constants::is_defined( 'WOOCOMMERCE_CART' ) || wc_post_content_has_shortcode( 'woocommerce_cart' );
+		/**
+		 * Filter to allow for custom logic to determine if the cart page is being viewed.
+		 *
+		 * @since 2.4.0
+		 * @param bool $is_cart Whether the cart page is being viewed.
+		 */
+		return apply_filters( 'woocommerce_is_cart', false ) || Constants::is_defined( 'WOOCOMMERCE_CART' ) || CartCheckoutUtils::is_cart_page();
 	}
 }
 
 if ( ! function_exists( 'is_checkout' ) ) {
 
 	/**
-	 * Is_checkout - Returns true when viewing the checkout page.
+	 * Is_checkout - Returns true when viewing the checkout page, or when processing AJAX requests for updating or processing the checkout.
 	 *
 	 * @return bool
 	 */
 	function is_checkout() {
-		$page_id = wc_get_page_id( 'checkout' );
-
-		return ( $page_id && is_page( $page_id ) ) || wc_post_content_has_shortcode( 'woocommerce_checkout' ) || apply_filters( 'woocommerce_is_checkout', false ) || Constants::is_defined( 'WOOCOMMERCE_CHECKOUT' );
+		/**
+		 * Filter to allow for custom logic to determine if the checkout page is being viewed.
+		 *
+		 * @since 2.4.0
+		 * @param bool $is_checkout Whether the checkout page is being viewed.
+		 */
+		return apply_filters( 'woocommerce_is_checkout', false ) || Constants::is_defined( 'WOOCOMMERCE_CHECKOUT' ) || CartCheckoutUtils::is_checkout_page();
 	}
 }
 

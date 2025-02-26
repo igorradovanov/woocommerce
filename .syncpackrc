@@ -10,45 +10,165 @@
 	"versionGroups": [
 		{
 			"dependencies": [
-				"pnpm"
-			],
-			"pinVersion": "^8.6.7",
-			"packages": [
-				"**"
-			]
-		},
-		{
-			"dependencies": [
 				"node"
 			],
 			"dependencyTypes": [
 				"engines"
 			],
-			"pinVersion": "^16.14.1",
+			"pinVersion": "^20.11.1",
 			"packages": [
 				"**"
 			]
+		},
+		{
+			"dependencies": [
+				"@actions/*",
+				"@automattic/*",
+				"@bartekbp/*",
+				"@storybook/*",
+				"@testing-library/*",
+				"@types/*",
+				"@typescript-eslint/*",
+				"@woocommerce/*",
+				"@wordpress/api-fetch",
+				"@wordpress/autop",
+				"@wordpress/babel-preset-default",
+				"@wordpress/base-styles",
+				"@wordpress/block-editor",
+				"@wordpress/blocks",
+				"@wordpress/browserslist-config",
+				"@wordpress/components",
+				"@wordpress/compose",
+				"@wordpress/core-data",
+				"@wordpress/data",
+				"@wordpress/data-controls",
+				"@wordpress/date",
+				"@wordpress/editor",
+				"@wordpress/dependency-extraction-webpack-plugin",
+				"@wordpress/deprecated",
+				"@wordpress/dom",
+				"@wordpress/dom-ready",
+				"@wordpress/e2e-test-utils",
+				"@wordpress/e2e-tests",
+				"@wordpress/element",
+				"@wordpress/html-entities",
+				"@wordpress/i18n",
+				"@wordpress/icons",
+				"@wordpress/is-shallow-equal",
+				"@wordpress/notices",
+				"@wordpress/plugins",
+				"@wordpress/postcss-plugins-preset",
+				"@wordpress/postcss-themes",
+				"@wordpress/prettier-config",
+				"@wordpress/primitives",
+				"@wordpress/private-apis",
+				"@wordpress/scripts",
+				"@wordpress/server-side-render",
+				"@wordpress/style-engine",
+				"@wordpress/stylelint-config",
+				"@wordpress/url",
+				"@wordpress/wordcount",
+				"babel*",
+				"eslint*",
+				"glob*",
+				"postcss*",
+				"webpack*"
+			],
+			"packages": [
+				"@woocommerce/block-library"
+			],
+			"isIgnored": true
 		},
 		{
 			"dependencies": [
 				"@typescript-eslint/**"
 			],
-			"pinVersion": "^5.54.0",
+			"pinVersion": "^5.62.0",
 			"packages": [
 				"**"
 			]
 		},
 		{
 			"dependencies": [
-				"@types/react"
+				"@babel/preset-env"
 			],
-			"dependencyTypes": [
-				"devDependencies"
-			],
-			"pinVersion": "^17.0.2",
+			"pinVersion": "^7.23.5",
 			"packages": [
 				"**"
 			]
+		},
+		{
+			"dependencies": [
+				"@babel/preset-react"
+			],
+			"pinVersion": "7.23.3",
+			"packages": [
+				"**"
+			]
+		},
+		{
+			"dependencies": [
+				"@babel/preset-typescript"
+			],
+			"pinVersion": "7.23.3",
+			"packages": [
+				"**"
+			]
+		},
+		{
+			"dependencies": [
+				"@babel/runtime"
+			],
+			"pinVersion": "^7.23.5",
+			"packages": [
+				"**"
+			]
+		},
+		{
+			"label": "React-related dependencies: @woocommerce/blocks-library",
+			"dependencies": [
+				"react",
+				"react-dom",
+				"@types/react-dom",
+				"@types/react"
+			],
+			"pinVersion": "18.3.x",
+			"packages": [
+				"@woocommerce/block-library",
+				"@woocommerce/storybook"
+			]
+		},
+		{
+			"label": "React-related dependencies: Everything else",
+			"dependencies": [
+				"react",
+				"react-dom",
+				"react-test-renderer",
+				"@types/react-dom",
+				"@types/react"
+			],
+			"pinVersion": "18.3.x",
+			"packages": [
+				"**"
+			]
+		},
+		{
+			"dependencies": [
+				"@testing-library/react"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^16.x.x"
+		},
+		{
+			"dependencies": [
+				"@testing-library/jest-dom"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^6.x.x"
 		},
 		{
 			"dependencies": [
@@ -61,34 +181,48 @@
 		},
 		{
 			"dependencies": [
-				"react",
-				"react-dom"
-			],
-			"packages": [
-				"**"
-			],
-			"pinVersion": "^17.0.2"
-		},
-		{
-			"dependencies": [
 				"typescript"
 			],
 			"packages": [
 				"**"
 			],
-			"pinVersion": "^5.1.6"
+			"pinVersion": "5.7.x"
 		},
 		{
 			"dependencies": [
 				"eslint"
 			],
-			"dependencyTypes": [
-				"devDependencies"
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^8.55.0"
+		},
+		{
+			"dependencies": [
+				"fork-ts-checker-webpack-plugin"
 			],
 			"packages": [
 				"**"
 			],
-			"pinVersion": "^8.32.0"
+			"pinVersion": "9.0.x"
+		},
+		{
+			"dependencies": [
+				"github-label-sync"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^2.3.1"
+		},
+		{
+			"dependencies": [
+				"@playwright/test"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^1.50.1"
 		},
 		{
 			"dependencies": [
@@ -112,14 +246,18 @@
 		{
 			"dependencies": [
 				"@wordpress/block**",
-				"@wordpress/viewport",
 				"@wordpress/interface",
 				"@wordpress/router",
-				"@wordpress/edit-site"
+				"@wordpress/edit-site",
+				"@wordpress/private-apis",
+				"@wordpress/dataviews",
+				"@wordpress/icons"
 			],
 			"packages": [
+				"@woocommerce/block-templates",
 				"@woocommerce/product-editor",
-				"woocommerce/client/admin",
+				"@woocommerce/settings-editor",
+				"@woocommerce/admin-library",
 				"@woocommerce/components"
 			],
 			"isIgnored": true
@@ -156,9 +294,19 @@
 				"@wordpress/env"
 			],
 			"packages": [
+				"@woocommerce/block-library",
 				"**"
 			],
-			"pinVersion": "^8.2.0"
+			"pinVersion": "10.17.0"
+		},
+		{
+			"dependencies": [
+				"@wordpress/e2e-test-utils-playwright"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^1.15.0"
 		},
 		{
 			"dependencies": [
@@ -167,7 +315,7 @@
 			"packages": [
 				"**"
 			],
-			"pinVersion": "wp-6.0"
+			"pinVersion": "wp-6.6"
 		},
 		{
 			"dependencies": [
@@ -176,14 +324,29 @@
 			"packages": [
 				"**"
 			],
-			"pinVersion": "^19.10.3"
+			"pinVersion": "^19.10.5"
+		},
+		{
+			"dependencies": [
+				"classnames"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^2.3.2"
+		},
+		{
+			"dependencies": [
+				"glob"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^10.3.10"
 		},
 		{
 			"dependencies": [
 				"postcss-loader"
-			],
-			"dependencyTypes": [
-				"devDependencies"
 			],
 			"packages": [
 				"**"
@@ -197,7 +360,52 @@
 			"packages": [
 				"**"
 			],
-			"pinVersion": "^8.4.7"
+			"pinVersion": "^8.4.32"
+		},
+		{
+			"dependencies": [
+				"rimraf"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "5.0.5"
+		},
+		{
+			"dependencies": [
+				"sass-loader"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^10.5.0"
+		},
+		{
+			"dependencies": [
+				"simple-git"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^3.21.0"
+		},
+		{
+			"dependencies": [
+				"stylelint"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^14.16.1"
+		},
+		{
+			"dependencies": [
+				"uuid"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^9.0.1"
 		},
 		{
 			"dependencies": [
@@ -206,25 +414,94 @@
 			"packages": [
 				"**"
 			],
-			"pinVersion": "^16.18.18"
+			"pinVersion": "20.x.x"
+		},
+		{
+			"label": "Testing related dependencies: React 18",
+			"dependencies": [
+				"@jest/test-sequencer",
+				"@types/jest",
+				"jest",
+				"jest-cli",
+				"jest-circus",
+				"jest-each",
+				"jest-environment-jsdom",
+				"jest-environment-node",
+				"babel-jest"
+			],
+			"packages": [
+				"@woocommerce/block-library",
+				"@woocommerce/storybook"
+			],
+			"pinVersion": "29.7.x"
+		},
+		{
+			"label": "Testing related dependencies: React 17",
+			"dependencies": [
+				"@jest/test-sequencer",
+				"@types/jest",
+				"jest",
+				"jest-cli",
+				"jest-circus",
+				"jest-each",
+				"jest-environment-jsdom",
+				"jest-environment-node",
+				"babel-jest"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "27.5.x"
+		},
+		{
+			"dependencies": [
+				"ts-jest"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "29.1.x"
+		},
+		{
+			"dependencies": [
+				"ts-loader"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "9.5.x"
+		},
+		{
+			"dependencies": [
+				"wireit"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "0.14.10"
+		},
+		{
+			"dependencies": [
+				"dompurify"
+			],
+			"packages": [
+				"**"
+			],
+			"pinVersion": "^2.5.7"
 		},
 		{
 			"label": "Only manage versions for these dependencies",
 			"dependencies": [
+				"@automattic/color-studio",
 				"@types/node",
-				"@types/react",
 				"@types/wordpress__components",
 				"@typescript-eslint/**",
 				"@wordpress/**",
 				"config",
 				"eslint",
 				"node",
-				"pnpm",
 				"postcss",
-				"postcss-loader",
-				"react",
-				"react-dom",
-				"typescript"
+				"postcss-loader"
 			],
 			"packages": [
 				"**"

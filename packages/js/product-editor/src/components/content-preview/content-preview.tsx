@@ -63,30 +63,29 @@ export function ContentPreview( { content }: ContentPreviewProps ) {
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
 		return select( blockEditorStore ).getSettings();
-	} );
+	}, [] );
 
 	return (
 		<div className="woocommerce-content-preview">
 			<Iframe
-				head={
-					<>
-						<EditorStyles styles={ parentEditorSettings?.styles } />
-						<style>
-							{ `body {
+				className="woocommerce-content-preview__iframe"
+				tabIndex={ -1 }
+			>
+				<>
+					<EditorStyles styles={ parentEditorSettings?.styles } />
+					<style>
+						{ `body {
 									overflow: hidden;
 								}` }
-						</style>
-					</>
-				}
-				className="woocommerce-content-preview__iframe"
-			>
-				<div
-					className="woocommerce-content-preview__content"
-					dangerouslySetInnerHTML={ sanitizeHTML( content, {
-						tags: CONTENT_TAGS,
-						attr: CONTENT_ATTR,
-					} ) }
-				/>
+					</style>
+					<div
+						className="woocommerce-content-preview__content"
+						dangerouslySetInnerHTML={ sanitizeHTML( content, {
+							tags: CONTENT_TAGS,
+							attr: CONTENT_ATTR,
+						} ) }
+					/>
+				</>
 			</Iframe>
 		</div>
 	);

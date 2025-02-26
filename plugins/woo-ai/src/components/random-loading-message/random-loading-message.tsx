@@ -2,7 +2,6 @@
  * External dependencies
  */
 import { useState, useEffect, useRef } from '@wordpress/element';
-import React from 'react';
 import { __ } from '@wordpress/i18n';
 import { Spinner } from '@woocommerce/components';
 
@@ -131,7 +130,9 @@ export const RandomLoadingMessage: React.FC< RandomLoadingMessageProps > = ( {
 			<span className="woo-ai-loading-message_spinner">
 				<Spinner />
 			</span>
-			<span>{ currentMessage }</span>
+			<span className="woo-ai-loading-message_content">
+				{ currentMessage }
+			</span>
 		</>
 	);
 };

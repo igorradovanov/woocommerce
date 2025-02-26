@@ -27,7 +27,8 @@ export function homeWCAdmin( includeTests = {} ) {
 	let response;
 	let api_x_wp_nonce;
 	let apiNonceHeader;
-	let includedTests = Object.assign( {
+	const includedTests = Object.assign(
+		{
 			orders: true,
 			other: true,
 			products: true,
@@ -51,15 +52,15 @@ export function homeWCAdmin( includeTests = {} ) {
 		} );
 		check( response, {
 			'is status 200': ( r ) => r.status === 200,
-			"body contains: current page is 'Home'": ( response ) =>
-				response.body.includes( 'aria-current="page">Home' ),
+			"body contains: current page is 'Home'": ( r ) =>
+				r.body.includes( 'aria-current="page">Home' ),
 		} );
 
 		// Correlate nonce values for use in subsequent requests.
 		api_x_wp_nonce = findBetween(
 			response.body,
-			'wp-json\\/","nonce":"',
-			'",'
+			'wp.apiFetch.createNonceMiddleware( "',
+			'"'
 		);
 
 		// Create request header with nonce value for use in subsequent requests.
